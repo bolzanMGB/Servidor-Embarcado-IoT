@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico R</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+        #grafico {
+            max-width: 90%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 10px;
+        }
+        body:has(#grafico[src=""]) h1::after {
+            content: " (Sem dados)";
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Gráfico R - Amplitude</h1>
+    {% if imagem_grafico %}
+        <img id="grafico" src="data:image/png;base64,{{ imagem_grafico }}" alt="Gráfico R">
+    {% else %}
+        <p>Sem dados para exibir.</p>
+    {% endif %}
+
+    <script>
+        // Recarregar a página a cada 5 segundos
+        setInterval(() => {
+            console.log("🔄 Atualizando a página...");
+            location.reload();
+        }, 5000);
+    </script>
+</body>
+</html>

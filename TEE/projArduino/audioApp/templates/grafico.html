@@ -3,7 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico em Tempo Real</title>
+    <title>Gráfico X</title>
+    <style>
+        /* Reset básico e estilo geral */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f2f5; /* Cinza claro suave */
+            font-family: 'Roboto', sans-serif; /* Fonte moderna e limpa */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333; /* Cor de texto escura e suave */
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #030506; /* Azul escuro elegante */
+        }
+
+        #grafico {
+            max-width: 90%; /* Responsivo */
+            height: auto;
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            background-color: #fff; /* Fundo branco para o gráfico */
+            padding: 10px; /* Espaço interno */
+        }
+
+        /* Estilo para quando não há gráfico */
+        body:has(#grafico[src=""]) h1::after {
+            content: " (Sem dados)";
+            font-size: 1rem;
+            color: #7f8c8d; /* Cinza suave */
+        }
+    </style>
+    <!-- Importando a fonte Roboto do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Gráfico em Tempo Real</h1>
@@ -11,7 +55,7 @@
 
     <!-- Dados iniciais (opcional) -->
     <script id="dados-grafico" type="application/json">
-        {{ dados_grafico|json_script }}
+        {{ dados_grafico|json_script:"dados-grafico" }}
     </script>
 
     <script>
@@ -27,15 +71,22 @@
             console.log("📥 Mensagem recebida:", mensagem);
 
             if (mensagem.atualizado) {
-                // Recarregar a imagem do gráfico
                 const img = document.getElementById("grafico");
-                img.src = "/grafico/?t=" + new Date().getTime(); // Adiciona timestamp para evitar cache
+                img.src = "/grafico/?t=" + new Date().getTime(); // Evita cache
             }
         };
 
         socket.onclose = function () {
             console.log("❌ Conexão WebSocket fechada");
         };
+    </script>
+
+    <script>
+        // Recarregar a página a cada 5 segundos
+        setInterval(() => {
+            console.log("🔄 Atualizando a página...");
+            location.reload();
+        }, 5000);
     </script>
 </body>
 </html>
