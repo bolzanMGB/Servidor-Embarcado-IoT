@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico em Tempo Real</title>
+</head>
+<body>
+    <h1>Gráfico em Tempo Real</h1>
+    <img id="grafico" src="data:image/png;base64,{{ imagem_grafico }}" alt="Gráfico">
+
+    <!-- Dados iniciais (opcional) -->
+    <script id="dados-grafico" type="application/json">
+        {{ dados_grafico|json_script }}
+    </script>
+
+    <script>
+        // Conectar ao WebSocket
+        const socket = new WebSocket("ws://" + window.location.host + "/ws/dados/");
+
+        socket.onopen = function () {
+            console.log("🔗 Conexão WebSocket estabelecida");
+        };
+
+        socket.onmessage = function (event) {
+            const mensagem = JSON.parse(event.data);
+            console.log("📥 Mensagem recebida:", mensagem);
+
+            if (mensagem.atualizado) {
+                // Recarregar a imagem do gráfico
+                const img = document.getElementById("grafico");
+                img.src = "/grafico/?t=" + new Date().getTime(); // Adiciona timestamp para evitar cache
+            }
+        };
+
+        socket.onclose = function () {
+            console.log("❌ Conexão WebSocket fechada");
+        };
+    </script>
+</body>
+</html>
