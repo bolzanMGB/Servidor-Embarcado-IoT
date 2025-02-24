@@ -50,8 +50,8 @@ CHANNEL_LAYERS = {
     },
 }
 
-ALLOWED_HOSTS = ['192.168.0.15', 'localhost', '127.0.0.1', '192.168.0.6']
-CSRF_TRUSTED_ORIGINS = ['http://192.168.0.15:8000'] 
+ALLOWED_HOSTS = ['192.168.0.19', 'localhost', '127.0.0.1', '192.168.0.6']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.0.19:8000'] 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
